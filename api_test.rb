@@ -1,15 +1,22 @@
 require 'twitter'
 
-client = Twitter::REST::Client.new do |config|
-    config.consumer_key        = "bLICaMaTag1XGvIHMfj7EPShV"
-    config.consumer_secret     = "nHJ58Tl1cQvcanR3LgVp5cjET5IUeAejoIkgNpQ0pIVGnZv45L"
-    config.access_token        = "2373342666-RUhfn65QpGsqDBGFALiMA4yzr65ukuR9cl2vrUw"
-    config.access_token_secret = "FwKO4JGZb0lRCnasUDSWHYftBRgRFdpF2uYn1XkSnN36p"   
+connection_strings = File.readlines('keys.txt')
+
+connection_strings.each.with_index do |line, index|
+    puts "#{index}, #{line.inspect}"
 end
 
 
-tweets = client.search('@AndrewYang', result_type: "recent", until:"2019-08-27").take(3)
+client = Twitter::REST::Client.new do |config|
+    config.consumer_key        = connection_strings[0].strip
+    config.consumer_secret     = connection_strings[1].strip
+    config.access_token        = connection_strings[2].strip
+    config.access_token_secret = connection_strings[3].strip
+end
+
+
+tweets = client.search('@AndrewYang', result_type: "recent", since_id:"1167629222292144128")
 
 tweets.each.with_index do |tweet, index|
-     puts "#{index}: =begin #{tweet.id}, =end #{tweet.created_at} : #{tweet.full_text}"
+     puts "#{index}: id: #{tweet.id}, created_at:#{tweet.created_at} : #{tweet.full_text}"
 end
