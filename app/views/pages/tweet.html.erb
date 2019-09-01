@@ -2,5 +2,8 @@
 
 <h1> Tweet: </h1>
 <p>
-    A tweet page. probably dont need this guy
+    <% Twitter.favorites("railscasts", count: 3).each do |tweet| %>
+        <blockquote><%= tweet.text %></blockquote>
+        <div class="from">&mdash @<%= tweet.user.screen_name %></div>
+    <% end %>
 </p>
