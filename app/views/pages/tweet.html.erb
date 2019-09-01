@@ -2,7 +2,7 @@
 
 <h1> Tweet: </h1>
 <p>
-    <% Twitter.favorites("railscasts", count: 3).each do |tweet| %>
+    <% $twitter.search("@AndrewYang", count: 3).each do |tweet| %>
         <blockquote><%= tweet.text %></blockquote>
         <div class="from">&mdash @<%= tweet.user.screen_name %></div>
     <% end %>
